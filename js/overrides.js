@@ -74,7 +74,6 @@ Modify breadcrumbs very slightly
     })
 
     toggle.addEventListener('click', event => {
-        console.log( event.target.getBoundingClientRect());
         event.preventDefault();
         /* maybe able to just rely on the removing of sf-hidden */
         if(window.innerWidth > 1000) {

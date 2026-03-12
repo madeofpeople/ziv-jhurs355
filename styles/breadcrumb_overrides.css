@@ -1,9 +1,16 @@
 /* Breadcrumbs */
 
+/* Breadcrumbs were wrapped in .node--view-mode-full */
+#block-jhsph-content .node--view-mode-full {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+}
+
 .breadcrumbs-region {
     flex-grow: 1;
     margin: 0 0 !important;
-    padding: 0 0 !important;
+    padding: 1rem 0 !important;
 }
 
 #block-breadcrumbs {
@@ -11,15 +18,24 @@
 }
 
 #block-breadcrumbs ol.breadcrumb {
-    padding-bottom: 1.5rem;
+    padding: 0;
 }
 
 .breadcrumbs-region .breadcrumb__item {
     border-right: 1px #dedede solid;
     padding: 0.2rem 1rem 0.2rem 1rem;
     margin-left: 0.2rem;
+    line-height: 2;
 }
 
+.breadcrumbs-region .breadcrumb__item:not(li.breadcrumb__item:last-child)  {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 250px;
+}
+
+#block-breadcrumbs ol.breadcrumb .breadcrumb__item:focus,
 #block-breadcrumbs ol.breadcrumb .breadcrumb__item:hover {
     background-color: #efefef;
 }
@@ -29,6 +45,12 @@
     position: relative;
     padding-right: 3rem;
     border-right: none;
+    max-width: 450px;
+}
+
+.breadcrumbs-region .breadcrumb__item:last-child .subnav-superfish {
+    top: 0;
+    right: 0;
 }
 
 .breadcrumbs-region .breadcrumb__item:first-of-type {
@@ -44,24 +66,24 @@
         transition-property: top height width color;
         transition-duration: 0.2s;
         transition-timing-function: ease-out;
-        background-color: #eee;
+        background-color: #dedede;
         border-radius: 0.25rem;
         overflow: hidden;
         padding: 0;
         margin-right: 0.15rem;
         margin-bottom: 0;
-        line-height: 1;
         height: 1rem;
         top: 0.5rem;
         position: relative;
         display: inline-block;
         a {
             display: block;
-            padding: 0.3rem 0.5rem;
+            padding: 0.3rem 0.5rem 0.2rem 0.5rem;
             color: #eee;
         }
     }
 
+    .breadcrumbs-region li.breadcrumb__item:focus:nth-child(n+3):not(li.breadcrumb__item:last-child),
     .breadcrumbs-region li.breadcrumb__item:hover:nth-child(n+3):not(li.breadcrumb__item:last-child) {
         width: calc-size(min-content, size);
         height: calc-size(min-content, size);
@@ -81,23 +103,23 @@
         transition-property: top height width color;
         transition-duration: 0.2s;
         transition-timing-function: ease-out;
-        background-color: #eee;
+        background-color: #dedede;
         border-radius: 0.25rem;
         overflow: hidden;
         padding: 0;
         margin-right: 0.15rem;
         margin-bottom: 0;
-        line-height: 1;
         height: 1rem;
         top: 0.5rem;
         position: relative;
         display: inline-block;
         a {
             display: block;
-            padding: 0.3rem 0.5rem;
-            color: #eee;
+            padding: 0.25rem 0.5rem 0.3rem 0.5rem;
+            color: #333;
         }
     }
+    .breadcrumbs-region li.breadcrumb__item:focus:nth-child(n+4):not(li.breadcrumb__item:last-child),
     .breadcrumbs-region li.breadcrumb__item:hover:nth-child(n+4):not(li.breadcrumb__item:last-child) {
         width: calc-size(min-content, size);
         height: calc-size(min-content, size);
@@ -108,7 +130,63 @@
     }
 }
 
-.breadcrumbs-region  .breadcrumb__item::after {
+.breadcrumbs-region .breadcrumb__item::after {
     content: "";
     margin: 0;
+}
+
+/* Show the child nav as a little hovery list */
+#block-breadcrumbs > .child_nav {
+    z-index: 2000; /* This value may need to change for certain drupes needs */
+    position: absolute;
+    right: 1rem;
+    width: calc( 100vw - 2rem);
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 3px 1px 6px rgba(0,0,0,0.2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* hide all the expand links */
+    li a.sf-accordion-button {
+        display: none;
+    }
+    li {
+        font-size: 1rem;
+        border-bottom: 1px #dedede solid;
+        a {
+            display: block;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #222;
+        }
+        a:focus,
+        a:hover {
+            background-color: var( --c-blue-pale );
+            color: #333;
+        }
+    }
+}
+
+@media(min-width: 1000px) {
+    .block-system-breadcrumb-block {
+        position: relative;
+    }
+
+    #block-breadcrumbs > .child_nav {
+        position: absolute;
+        top: 2rem;
+        max-width: 400px;
+        left: auto;
+        right: auto;
+        left: 1rem;
+    }
+}
+
+#block-breadcrumbs > .child_nav.sf-hidden {
+    display: none;
+}
+
+#block-breadcrumbs > .child_nav.open {
+    display: block;
 }

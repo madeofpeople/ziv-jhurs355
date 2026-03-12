@@ -1,0 +1,101 @@
+.main {
+      /* just to simulate content length */
+      min-height: 300vh;
+}
+
+
+
+
+/* Wrapper */
+
+/* Breadcrumbs were wrapped in .node--view-mode-full */
+#block-jhsph-content .node--view-mode-full {
+      display: flex;
+      justify-content: space-between;
+}
+
+/* Subnav */
+
+.subnav-region {
+      margin: 0;
+      padding: 0;
+}
+
+#superfish-main-toggle {
+      border: 0;
+}
+
+#superfish-main-toggle::after {
+      border: 0;
+      content: "";
+      display: none !important;
+}
+
+.subnav-region .subnav-static {
+      display: none;
+      position: absolute
+}
+
+.subnav-region .subnav-superfish > .sf-menu {
+      display: none;
+}
+
+.superfish-main-toggle {
+      padding-left: 0;
+      padding-right: 0;
+}
+
+.subnav-superfish .sf-accordion-toggle {
+      position: absolute;
+      right: 1.25rem;
+      top: -1.5rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      background-color: #eee;
+      border: 1px solid #dedede;
+      border-radius: 20%;
+      color: #333;
+      padding-top: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+}
+
+.subnav-superfish .sf-accordion-toggle > a {
+      position: relative;
+      width: 3rem;
+      text-align: center;
+      line-height: 1;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+}
+
+.subnav-superfish .sf-accordion-toggle > a::before {
+      content: "☰";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      background-image: none;
+      font-size: 1.5rem;
+      color: #333;
+}
+
+.subnav-superfish .sf-accordion-toggle > a:hover::before {
+      background-color: #333;
+      border-radius: 0.25rem;
+      color: #fff;
+}
+
+.subnav-superfish .sf-accordion-toggle > a > span {
+      visibility: hidden;
+      position: fixed;
+      left: 100vw;
+      top: 100vh;
+      overflow: hidden;
+}

@@ -1,0 +1,13 @@
+/* Small tweaks to primary nav alignment */
+#superfish-header-secondary {
+      .header-main > .header-menus {
+            position: relative;
+            top: 0.975rem;
+      }
+
+      .block-mainmenu-superfish>.menu.sf-style-none:not(.sf-accordion) li.active-trail.sf-depth-1>a {
+            border-top: 2px solid;
+            border-bottom: 0;
+            color: #b7ddff;
+      }
+}

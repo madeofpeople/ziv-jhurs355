@@ -1,0 +1,64 @@
+<div 
+    id="static-modal" 
+    class="demo-modal" 
+    tabindex="-1"
+    role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <a class="close"  href="#">✖</a>
+            <div class="modal-body">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    (function() {
+        const modal = document.getElementById('static-modal');
+        const closeButton = modal.querySelector('a.close');
+        closeButton.addEventListener('click', () => {
+            modal.classList.remove('open');
+        });
+    })();
+</script>
+<style>
+    .demo-modal {
+        z-index: 100000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        max-width: 500px;
+        background-color: white; 
+        display: none;
+        opacity: 0;
+        transition-property: opacity;
+        transition-timing-function: ease-out;
+        transition-duration: 0.2s;
+    }
+
+    .demo-modal.open {
+        display: block;
+        opacity: 1;
+
+    }
+
+    .modal-content {
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+        border-radius: 0.2rem;
+        position: relative;
+        z-index: 1000;
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 2000;
+        }
+        .modal-body {
+            .sf-accordion-button {
+                display: none;
+            }
+        }
+    }
+</style>

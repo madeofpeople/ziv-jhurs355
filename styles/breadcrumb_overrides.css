@@ -176,7 +176,7 @@
     #block-breadcrumbs > .child_nav {
         position: absolute;
         top: 2rem;
-        max-width: 400px;
+        width: 400px;
         left: auto;
         right: auto;
         left: 1rem;

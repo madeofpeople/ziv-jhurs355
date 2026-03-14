@@ -7,7 +7,7 @@ Modify breadcrumbs very slightly
     let current_subnav;
     let child_nav;
     const bc = document.getElementById('block-breadcrumbs'); // the breadcrumb container
-    const subnav = document.getElementById("block-mainnavigation"); // the full tree to work off
+    const subnav = document.querySelector(".subnav-region > .subnav-superfish"); // the full tree to work off
     const toggle = subnav.querySelector(".sf-accordion-toggle"); // the button that toggles the nav 
 
     const first_crumb = bc.querySelector('li.breadcrumb__item');
@@ -30,68 +30,71 @@ Modify breadcrumbs very slightly
             current_subnav = next_active;
             recurse_active_trail(next_active);
         } else {
-            child_nav = current_subnav.querySelector('ul');
+            if( current_subnav ) child_nav = current_subnav.querySelector('ul');
         }
     }
     recurse_active_trail(subnav);
 
-    function getElementOffset(element, property) {
-        //Calculate the actual property name
-        property = "offset"+property[0].toUpperCase()+property.slice(1).toLowerCase();
-        if (property == "offsetLeft" || property == "offsetTop") {
-            var actualOffset = element[property];
-            var current = element.offsetParent;
+    // positions subnav
+    let subnavwidth = 400;
+    function position_subnav(el) {
+        if(window.innerWidth > 1000) {
+            const rect = toggle.getBoundingClientRect();
+            if( rect.x < window.innerWidth*0.5 ) {
+                let left = subnavwidth -  2*rect.width + 'px';
+                el.style.left =  left;
+                el.style.right = 'auto';
+            } else {
+                el.style.left =  'auto';
+                el.style.right = '3.5rem';
 
-            //Look up the node tree to add up all the offset value
-            while (current != null) {
-                actualOffset += current[property];
-                current = current.offsetParent;
             }
-
-            return actualOffset;
-        } else if (property == "offsetHeight" || property == "offsetWidth") {
-            return element[property];
+            el.style.top =  '32px'; // this calculation was simplified and 
         }
-        return false;
     }
 
     // pop a copy into the last crumb
-    const cn = child_nav.cloneNode(true);
-    cn.id = "zivjhurs__child_nav"
-    cn.classList.add('child_nav'); // a little useful selector
-    bc.append(cn);
+    if( child_nav ) {
+        const cn = child_nav.cloneNode(true);
+        cn.id = "zivjhurs__child_nav"
+        cn.classList.add('child_nav'); // a little useful selector
+        bc.append(cn);
 
-    /*
-    close the child_nav when clicking outside of the last_crumb */
-    document.addEventListener('click', event => {
-        if( event.target.id != "superfish-main-toggle") {
-            const clicked_inside = cn.contains(event.target)
-            if (!clicked_inside && cn.classList.contains('open')) {
-                cn.classList.add('sf-hidden');
-                cn.classList.remove('open');
+        /*
+        close the child_nav when clicking outside of the last_crumb */
+        document.addEventListener('click', event => {
+            if( event.target.id != "superfish-main-toggle") {
+                const clicked_inside = cn.contains(event.target)
+                if (!clicked_inside && cn.classList.contains('open')) {
+                    cn.classList.add('sf-hidden');
+                    cn.classList.remove('open');
+                }
             }
-        }
-    })
+        })
 
-    toggle.addEventListener('click', event => {
-        event.preventDefault();
-        /* maybe able to just rely on the removing of sf-hidden */
-        if(window.innerWidth > 1000) {
-            const rect = event.target.getBoundingClientRect();
-            if( rect.x < window.innerWidth*0.5 ) {
-                cn.style.left =  rect.x + 'px';
-                cn.style.right = 'auto';
-            } else {
-                cn.style.left =  'auto';
-                cn.style.right = '3.5rem';
+        toggle.addEventListener('click', event => {
+            event.preventDefault();
+            /* maybe able to just rely on the removing of sf-hidden */
+            // position_subnav(cn);
+            position_subnav(cn);
+            cn.classList.toggle('sf-hidden');
+            cn.classList.toggle('open');
+            cn.querySelector('a').focus();
+        });
 
-            }
-            cn.style.top = rect.height + 16 + 'px';
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
         }
-        cn.classList.remove('sf-hidden');
-        cn.classList.add('open');
-        cn.querySelector('a').focus();
-    });
+        const debounced_resize = debounce(() => {
+            position_subnav(cn)
+        }, 250);
+        position_subnav(cn)
+        window.addEventListener('resize', debounced_resize );
+    }
     
 })();
 

@@ -49,14 +49,18 @@ Modify breadcrumbs very slightly
                 el.style.right = '3.5rem';
 
             }
-            el.style.top =  '32px'; // this calculation was simplified and 
+            el.style.top =  '32px'; // this could become part of css, instead of calculated here, but there maybe some tweaks left to do here.
+        } else {
+            el.style.left = '1rem';
+            el.style.right = 'auto';
+            el.style.top = 'auto';
         }
     }
 
     // pop a copy into the last crumb
     if( child_nav ) {
         const cn = child_nav.cloneNode(true);
-        cn.id = "zivjhurs__child_nav"
+        cn.id = "zivjhurs__child_nav" // change the id to avoid conflicts
         cn.classList.add('child_nav'); // a little useful selector
         bc.append(cn);
 
@@ -91,7 +95,7 @@ Modify breadcrumbs very slightly
         }
         const debounced_resize = debounce(() => {
             position_subnav(cn)
-        }, 250);
+        }, 100);
         position_subnav(cn)
         window.addEventListener('resize', debounced_resize );
     }
